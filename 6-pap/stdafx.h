@@ -8,12 +8,14 @@
 #include <stdio.h>
 #include <tchar.h>
 #include <math.h>
+#include <cstdint>
 
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <thread>
 #include <future>
+#include <utility>
 
 #include <omp.h>
 
