@@ -5,9 +5,10 @@
 #include "integrate.h"
 
 
-double runParallel(IntegrateFunction f, double l, double r, int totalSteps);
+double runOnce(IntegrateFunction f, double l, double r, int totalSteps);
 
 double runParallelOMP(IntegrateFunction f, double l, double r, int totalSteps);
+double runParallelFuture(IntegrateFunction f, double l, double r, int totalSteps);
 double runParallelPackage(IntegrateFunction f, double l, double r, int totalSteps);
 
 

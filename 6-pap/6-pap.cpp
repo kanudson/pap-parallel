@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 }
 
 
-double runParallel(IntegrateFunction f, double l, double r, int totalSteps)
+double runOnce(IntegrateFunction f, double l, double r, int totalSteps)
 {
     double pi = integrate(f, 0, 1, totalSteps) * 4;
     return pi;
@@ -46,15 +46,15 @@ double runParallel(IntegrateFunction f, double l, double r, int totalSteps)
 
 double runParallelOMP(IntegrateFunction f, double l, double r, int totalSteps)
 {
-    double pi = integrateParallel(f, 0, 1, totalSteps) * 4;
+    double pi = integrateOMP(f, 0, 1, totalSteps) * 4;
     return pi;
 }
 
 
-double runParallelPackage(IntegrateFunction f, double l, double r, int totalSteps)
+double runParallelFuture(IntegrateFunction f, double l, double r, int totalSteps)
 {
     int maxThreads = omp_get_max_threads();
-    std::vector<std::future<double>> futures;
+    std::vector<std::future<double>> futures(maxThreads);
 
     const int useSteps = totalSteps / maxThreads;
     const double range = (r - l) / (double)maxThreads;
@@ -65,18 +65,51 @@ double runParallelPackage(IntegrateFunction f, double l, double r, int totalStep
     for (int i = 0; i < maxThreads; ++i)
     {
         auto future = std::async(std::launch::async, integrate, f, curL, curR, useSteps);
-        futures.push_back(std::move(future));
+        futures[i] = std::move(future);
 
         curL = curR;
         curR = curL + range;
     }
 
-    double sumpi = 0.0;
+    double sum = 0.0;
     for (auto &future : futures)
     {
-        sumpi += future.get();
+        sum += future.get();
     }
 
-    return sumpi;
+    return sum;
 }
 
+
+double runParallelPackage(IntegrateFunction f, double l, double r, int totalSteps)
+{
+    int maxThreads = omp_get_max_threads();
+
+    std::vector<std::packaged_task<double(IntegrateFunction, double, double, int)>> packages(maxThreads);
+    std::vector<std::future<double>> futures(maxThreads);
+
+    const int useSteps = totalSteps / maxThreads;
+    const double range = (r - l) / (double)maxThreads;
+    double curL, curR;
+
+    curL = 0.0;
+    curR = range;
+    for (int i = 0; i < maxThreads; ++i)
+    {
+        std::packaged_task<double(IntegrateFunction, double, double, int)> pack(integrate);
+        packages[i] = std::move(pack);
+        futures[i] = packages[i].get_future();
+        packages[i](f, curL, curR, useSteps);
+        curL = curR;
+        curR += range;
+    }
+
+    //  get results
+    double sum = 0.0;
+    for (auto &future : futures)
+    {
+        sum += future.get();
+    }
+
+    return sum;
+}
