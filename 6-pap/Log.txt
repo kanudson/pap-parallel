@@ -1,0 +1,54 @@
+Cores: 1
+Package Total: 11408
+Package Average: 11408
+Futures Total: 11433
+Futures Average: 11433
+
+Cores: 2
+Package Total: 5997
+Package Average: 5997
+Futures Total: 6027
+Futures Average: 6027
+
+Cores: 3
+Package Total: 4592
+Package Average: 4592
+Futures Total: 4451
+Futures Average: 4451
+
+Cores: 4
+Package Total: 3831
+Package Average: 3831
+Futures Total: 3864
+Futures Average: 3864
+
+Cores: 5
+Package Total: 3470
+Package Average: 3470
+Futures Total: 3390
+Futures Average: 3390
+
+Cores: 6
+Package Total: 3150
+Package Average: 3150
+Futures Total: 3147
+Futures Average: 3147
+
+Cores: 7
+Package Total: 2940
+Package Average: 2940
+Futures Total: 2933
+Futures Average: 2933
+
+Cores: 8
+Package Total: 2905
+Package Average: 2905
+Futures Total: 2922
+Futures Average: 2922
+
+Press any key to continue . . .
+
+Runtime test >> 5
+Normal
+3.141593
+3909 ms
