@@ -5,11 +5,24 @@
 #include "integrate.h"
 
 
-double runOnce(IntegrateFunction f, double l, double r, int totalSteps);
+enum TEST_CASE_SELECT
+{
+    RUN_NORMAL = 1,
+    RUN_OMP = 2,
+    RUN_ASYNC = 4,
+    RUN_PACKAGE = 8,
+};
 
+constexpr int RUN_ALL_TEST = RUN_NORMAL | RUN_OMP | RUN_ASYNC | RUN_PACKAGE;
+
+
+double runOnce(IntegrateFunction f, double l, double r, int totalSteps);
 double runParallelOMP(IntegrateFunction f, double l, double r, int totalSteps);
-double runParallelFuture(IntegrateFunction f, double l, double r, int totalSteps);
-double runParallelPackage(IntegrateFunction f, double l, double r, int totalSteps);
+double runParallelFuture(const uint8_t cores, IntegrateFunction f, double l, double r, int totalSteps);
+double runParallelPackage(const uint8_t cores, IntegrateFunction f, double l, double r, int totalSteps);
+
+
+void MeassureTimeWithCores(const uint8_t cores, const uint32_t numOfSteps, uint8_t flags = RUN_ALL_TEST);
 
 
 template<typename RetVal, typename Fct, typename... Args>
