@@ -24,4 +24,13 @@ std::chrono::milliseconds meassureTime(Fct function, RetVal& ret, Args... parame
     return usedTime;
 }
 
+
+template<typename... Args>
+void println(char const * const str, Args... parameters)
+{
+    std::string ausgabe(str);
+    ausgabe.append("\n");
+    printf(ausgabe.c_str(), parameters...);
+}
+
 #endif // pap_parallel_h__
