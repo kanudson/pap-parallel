@@ -1,0 +1,13 @@
+[dD]ebug*
+[rR]elease*
+[Oo]bj
+[Bb]in
+*sdf
+*ipch
+*.user
+*.suo
+*.[Cc]ache
+*.bak
+*.ncb
+*.log
+[Tt]humbs.db
