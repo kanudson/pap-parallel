@@ -5,6 +5,9 @@
 
 #include "pap-parallel.h"
 
+#include "batchTest.h"
+
+
 int main(int argc, char* argv[])
 {
     double pi = 0, piOmp = 0, piPackage = 0;
