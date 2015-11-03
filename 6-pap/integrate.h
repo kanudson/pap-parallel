@@ -6,6 +6,6 @@ typedef double(*IntegrateFunction)(double);
 
 
 double integrate(IntegrateFunction f, double l, double r, int steps);
-double integrateParallel(IntegrateFunction f, double l, double r, int steps);
+double integrateOMP(IntegrateFunction f, double l, double r, int steps);
 
 #endif // integrate_h__

@@ -41,17 +41,16 @@ double integrate(IntegrateFunction f, double l, double r, int steps)
 *  The more steps the better is the approximation.
 * @return the approximated area under f.
 */
-double integrateParallel(IntegrateFunction f, double l, double r, int steps)
+double integrateOMP(IntegrateFunction f, double l, double r, int steps)
 {
     int i;
     double step_size = (r - l) / (double)steps;
     double sum = 0.0;
 
-#pragma omp parallel for
+#pragma omp parallel for reduction(+ : sum)
     for (i = 0; i < steps; i++)
     {
-        double x = (i + 0.5)*step_size;
-#pragma omp atomic
+        double x = (i + 0.5) * step_size;
         sum += step_size * f(x);
     }
     return sum;
